@@ -37,4 +37,16 @@ app.post("/herois", function (req, res) {
   res.send("Item criado com sucesso!");
 });
 
+// Read By Id -> [GET] /herois/:id
+app.get("/herois/:id", function (req, res) {
+  // Pegamos o parâmetro de rota ID
+  const id = req.params.id - 1;
+
+  // Pegamos a informação da lista
+  const item = lista[id];
+
+  // Exibimos o item na resposta do endpoint
+  res.send(item);
+});
+
 app.listen(3000);
