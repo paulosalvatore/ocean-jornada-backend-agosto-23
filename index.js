@@ -41,17 +41,17 @@ async function main() {
   });
 
   // Create -> [POST] /herois
-  app.post("/herois", function (req, res) {
+  app.post("/herois", async function (req, res) {
     // console.log(req.body, typeof req.body);
 
     // Extrai o nome do Body da Request (Corpo da Requisição)
-    const item = req.body.nome;
+    const item = req.body;
 
-    // Inserir o item na lista
-    lista.push(item);
+    // Inserir o item na collection
+    await collection.insertOne(item);
 
     // Enviamos uma resposta de sucesso
-    res.send("Item criado com sucesso!");
+    res.send(item);
   });
 
   // Read By Id -> [GET] /herois/:id
