@@ -35,8 +35,9 @@ async function main() {
   //             0                    1                2
 
   // Read All -> [GET] /herois
-  app.get("/herois", function (req, res) {
-    res.send(lista.filter(Boolean));
+  app.get("/herois", async function (req, res) {
+    const itens = await collection.find().toArray();
+    res.send(itens);
   });
 
   // Create -> [POST] /herois
