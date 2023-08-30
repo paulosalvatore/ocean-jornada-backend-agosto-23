@@ -69,26 +69,26 @@ async function main() {
   });
 
   // Update -> [PUT] /herois/:id
-  app.put("/herois/:id", function (req, res) {
+  app.put("/herois/:id", async function (req, res) {
     // Pegamos o parâmetro de rota ID
-    const id = req.params.id - 1;
+    const id = req.params.id;
 
     // Extrai o nome do Body da Request (Corpo da Requisição)
-    const item = req.body.nome;
+    const item = req.body;
 
-    // Atualizamos a informação na lista de registros
-    lista[id] = item;
+    // Atualizamos a informação na collection
+    await collection.updateOne({ _id: new ObjectId(id) }, { $set: item });
 
-    res.send("Item editado com sucesso!");
+    res.send(item);
   });
 
   // Delete -> [DELETE] /herois/:id
-  app.delete("/herois/:id", function (req, res) {
+  app.delete("/herois/:id", async function (req, res) {
     // Pegamos o parâmetro de rota ID
-    const id = req.params.id - 1;
+    const id = req.params.id;
 
-    // Excluir o item da lista
-    delete lista[id];
+    // Excluir o item da collection
+    await collection.deleteOne({ _id: new ObjectId(id) });
 
     res.send("Item excluído com sucesso!");
   });
