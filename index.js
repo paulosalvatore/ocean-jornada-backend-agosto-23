@@ -1,5 +1,5 @@
 const express = require("express");
-const { MongoClient } = require("mongodb");
+const { MongoClient, ObjectId } = require("mongodb");
 
 // const url = "mongodb://localhost:27017";
 const url = "mongodb://127.0.0.1:27017";
@@ -55,12 +55,14 @@ async function main() {
   });
 
   // Read By Id -> [GET] /herois/:id
-  app.get("/herois/:id", function (req, res) {
+  app.get("/herois/:id", async function (req, res) {
     // Pegamos o parâmetro de rota ID
-    const id = req.params.id - 1;
+    const id = req.params.id;
 
-    // Pegamos a informação da lista
-    const item = lista[id];
+    // Pegamos a informação da collection
+    const item = await collection.findOne({
+      _id: new ObjectId(id),
+    });
 
     // Exibimos o item na resposta do endpoint
     res.send(item);
