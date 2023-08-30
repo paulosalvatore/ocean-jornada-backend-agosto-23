@@ -51,7 +51,7 @@ async function main() {
     await collection.insertOne(item);
 
     // Enviamos uma resposta de sucesso
-    res.send(item);
+    res.status(201).send(item);
   });
 
   // Read By Id -> [GET] /herois/:id
@@ -90,7 +90,7 @@ async function main() {
     // Excluir o item da collection
     await collection.deleteOne({ _id: new ObjectId(id) });
 
-    res.send("Item excluído com sucesso!");
+    res.status(204).send();
   });
 
   app.listen(3000);
